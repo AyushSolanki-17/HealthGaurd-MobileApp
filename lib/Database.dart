@@ -1,0 +1,4 @@
+class SqlLiteDBProvider{
+  SqlLiteDBProvider._();
+  
+}
