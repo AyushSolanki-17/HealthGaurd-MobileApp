@@ -3,7 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_guard/login_design/home_model.dart';
-import 'package:health_guard/login_design/globals.dart';
+import 'package:health_guard/globals.dart';
 import 'package:health_guard/login_design/button_widget.dart';
 import 'package:health_guard/login_design/textfield_widget.dart';
 import 'package:health_guard/login_design/wave_widget.dart';
@@ -32,10 +32,11 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
-  void setUser(
-      String u_email, String u_accesstoken, String u_refreshtoken) async {
+  void setUser(String u_email, String u_name, String u_accesstoken,
+      String u_refreshtoken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('email', u_email);
+    prefs.setString('fname', u_name);
     prefs.setString('access_token', u_accesstoken);
     prefs.setString('refresh_token', u_refreshtoken);
   }
@@ -129,9 +130,12 @@ class _LoginViewState extends State<LoginView> {
                   padding: EdgeInsets.only(left: 7.0),
                   child: Align(
                       alignment: Alignment.centerLeft,
-                      child: has_errors? Text(server_respond['Error'].toString(),
-                        style: TextStyle(color: Colors.red),):Text('')
-                  ),
+                      child: has_errors
+                          ? Text(
+                              server_respond['Error'].toString(),
+                              style: TextStyle(color: Colors.red),
+                            )
+                          : Text('')),
                 ),
                 SizedBox(
                   height: 20.0,
@@ -154,13 +158,14 @@ class _LoginViewState extends State<LoginView> {
                             if (value['Error'] != null) {
                               has_errors = true;
                             } else {
-                              setUser(value['email'], value['access_token'],
+                              setUser(
+                                  value['email'],
+                                  value['fname'],
+                                  value['access_token'],
                                   value['refresh_token']);
                               Navigator.of(context).pushAndRemoveUntil(
                                   MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          HomePage()),
-                                  (Route<dynamic> route) => false);
+                                      builder: (BuildContext context) =>HomePage()),(Route<dynamic> route) => false);
                             }
                           });
                         }).catchError((err) {

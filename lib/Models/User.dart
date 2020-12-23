@@ -54,7 +54,13 @@ class HealthGuardUser{
         'client_id': api_credentials.CLIENT_ID,
         'client_secret': api_credentials.CLIENT_SECRET,
       });
-      return await json.decode(response.body);
+      var val = await json.decode(response.body);
+      if (val['Error']!=null){
+        return {
+          'Error':'Server Error'
+        };
+      }
+      return val;
     }
     catch(e){
       return {

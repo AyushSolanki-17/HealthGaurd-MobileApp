@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:health_guard/login_design/globals.dart';
+import 'package:health_guard/globals.dart';
 
 
 class HomeModel extends ChangeNotifier {

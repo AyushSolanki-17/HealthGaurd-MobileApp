@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import 'package:health_guard/login_design/home_model.dart';
-import 'package:health_guard/login_design/signup_page.dart';
 import 'package:health_guard/login_design/login_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:health_guard/home_design/home_page.dart';
+import 'package:health_guard/health_test_design/ht_screen.dart';
 import 'package:health_guard/api_credentials.dart' as api_credentials;
+import 'package:health_guard/home_design/Dashboard.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -22,7 +20,7 @@ class HealthGuard extends StatelessWidget
     precacheImage(AssetImage('assets/icon/HGlogo.png'), context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainPage(),
+      home: MainPage(),//MainPage()
     );
   }
 }
@@ -45,12 +43,12 @@ class _MainPageState extends State<MainPage>{
       Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context)=> LoginPageGuider()),(Route<dynamic> route)=> false);
     }
     else {
-      String user_access_token = await pref.getString('access_token');
       String user_refresh_token = await pref.getString('refresh_token');
       try{
         var url = api_credentials.API_LINK+"/api/token/refresh/";
         var response = await http.post(url, body: {
           'grant_type': 'refresh_token',
+          'email': user_email,
           'refresh_token': user_refresh_token,
           'client_id': api_credentials.CLIENT_ID,
           'client_secret': api_credentials.CLIENT_SECRET,
@@ -58,11 +56,13 @@ class _MainPageState extends State<MainPage>{
         var data = await json.decode(response.body);
         var cu = {
           'email': user_email,
+          'fname': data['fname'],
           'access_token': data['access_token'],
           'refresh_token': data['refresh_token'],
         };
         setState(() {
           CurrentUser = cu;
+          pref.setString('fname', cu['fname']);
           pref.setString('access_token', cu['access_token']);
           pref.setString('refresh_token', cu['refresh_token']);
           isUserAuthenticated = true;

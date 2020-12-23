@@ -1,7 +1,7 @@
 //this page for buttons
 
 import 'package:flutter/material.dart';
-import 'package:health_guard/login_design/globals.dart';
+import 'package:health_guard/globals.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String title;

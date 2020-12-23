@@ -4,13 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:health_guard/login_design/home_model.dart';
-import 'package:health_guard/login_design/globals.dart';
+import 'package:health_guard/globals.dart';
 import 'package:health_guard/login_design/button_widget.dart';
 import 'package:health_guard/login_design/textfield_widget.dart';
 import 'package:health_guard/login_design/wave_widget.dart';
 import 'package:health_guard/Models/User.dart';
 import 'package:provider/provider.dart';
-import 'package:health_guard/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:health_guard/home_design/home_page.dart';
 import 'login_view.dart';
@@ -70,9 +69,10 @@ class _SignUpState extends State<SignUp> {
 
   }
 
-  void setUser(String u_email, String u_accesstoken, String u_refreshtoken) async{
+  void setUser(String u_email,String u_name, String u_accesstoken, String u_refreshtoken) async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('email', u_email);
+    prefs.setString('fname', u_name);
     prefs.setString('access_token', u_accesstoken);
     prefs.setString('refresh_token', u_refreshtoken);
   }
@@ -290,7 +290,7 @@ class _SignUpState extends State<SignUp> {
                                     has_errors = true;
                                   }
                                   else{
-                                     setUser(value['email'], value['access_token'], value['refresh_token']);
+                                     setUser(value['email'], value['fname'],value['access_token'], value['refresh_token']);
                                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context)=> HomePage()),(Route<dynamic> route)=> false);
                                   }
                                 });

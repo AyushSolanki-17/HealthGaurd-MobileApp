@@ -1,7 +1,7 @@
 //this page for input fields
 
 import 'package:flutter/material.dart';
-import 'package:health_guard/login_design/globals.dart';
+import 'package:health_guard/globals.dart';
 import 'package:health_guard/login_design/home_model.dart';
 import 'package:provider/provider.dart';
 
