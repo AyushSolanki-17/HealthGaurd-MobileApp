@@ -3,16 +3,17 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:health_guard/Models/CurrentUser.dart';
 import 'package:health_guard/globals.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:health_guard/fonts_icons/med_icons.dart';
 import 'package:health_guard/health_test_design/ht_screen.dart';
+import 'package:health_guard/home_design/home_page.dart';
+import '../main.dart';
 import 'CardDesign.dart';
 
 class Dashboard extends StatefulWidget {
-  final String fname;
-  final String email;
-  const Dashboard({Key key, this.fname, this.email}) : super(key: key);
+
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -20,9 +21,8 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard>
     with SingleTickerProviderStateMixin {
 
-  String fname;
-  String email;
   String greetings;
+  CurrentUser currentUser = new CurrentUser();
   bool isCollapsed = true;
   double screenWidth, screenHeight;
   final Duration duration = const Duration(milliseconds: 300);
@@ -43,12 +43,23 @@ class _DashboardState extends State<Dashboard>
         .animate(_controller);
     DateTime time = DateTime.now();
     setState(() {
-      this.fname = widget.fname;
-      this.email = widget.email;
       if(time.hour<12){this.greetings = "Good Morning!!";}
       else if(time.hour<16){this.greetings = "Good Afternoon!!";}
       else {this.greetings = "Good Evening!!";}
     });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        this.currentUser = CurrentUserInfo.of(context).currentUser;
+      });
+    });
+
+  }
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+
+    super.didChangeDependencies();
+
   }
 
   @override
@@ -62,14 +73,13 @@ class _DashboardState extends State<Dashboard>
     Size size = MediaQuery.of(context).size;
     screenHeight = size.height;
     screenWidth = size.width;
-
     return SafeArea(
       child: Scaffold(
         backgroundColor: Global.blue,
         body: Stack(
           children: <Widget>[
             menu(context),
-            dashboard(context,fname),
+            dashboard(context,this.currentUser.fname),
           ],
         ),
       ),
@@ -185,7 +195,7 @@ class _DashboardState extends State<Dashboard>
                               Row(
                                 children: [
                                   Text(
-                                    '${this.greetings} ${fname}',
+                                    '${this.greetings} \n${fname}',
                                     style: TextStyle(
                                       color: Global.black,
                                       fontSize: 30.0,

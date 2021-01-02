@@ -8,19 +8,40 @@ import 'package:health_guard/home_design/Dashboard.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'Models/CurrentUser.dart';
+
 void main()=>runApp(HealthGuard());
+
+class CurrentUserInfo extends InheritedWidget{
+  final CurrentUser currentUser;
+
+  CurrentUserInfo({this.currentUser, Widget child}): super(child: child);
+
+  @override
+  bool updateShouldNotify(InheritedWidget oldWidget)=>true;
+
+  static CurrentUserInfo of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<CurrentUserInfo>();
+  }
+
+}
+
 
 
 class HealthGuard extends StatelessWidget
 {
 
+  final CurrentUser currentUser = new CurrentUser();
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+
     precacheImage(AssetImage('assets/icon/HGlogo.png'), context);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MainPage(),//MainPage()
+    return CurrentUserInfo(
+      currentUser: currentUser,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: MainPage(),//MainPage()
+      ),
     );
   }
 }
@@ -60,8 +81,11 @@ class _MainPageState extends State<MainPage>{
           'access_token': data['access_token'],
           'refresh_token': data['refresh_token'],
         };
+        CurrentUserInfo.of(context).currentUser.email = cu['email'];
+        CurrentUserInfo.of(context).currentUser.fname = cu['fname'];
+        CurrentUserInfo.of(context).currentUser.access_token = cu['access_token'];
+        CurrentUserInfo.of(context).currentUser.refresh_token = cu['refresh_token'];
         setState(() {
-          CurrentUser = cu;
           pref.setString('fname', cu['fname']);
           pref.setString('access_token', cu['access_token']);
           pref.setString('refresh_token', cu['refresh_token']);

@@ -1,5 +1,5 @@
 //this page is for sign in form
-
+import 'package:health_guard/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -263,13 +263,12 @@ class _SignUpState extends State<SignUp> {
                         height: 20.0,
                       ),
                       Material(
+                        color: Global.mediumGreen,
                         child: InkWell(
                           child: ButtonWidget(
                             title: 'Sign Up',
                             hasBorder: false,
                           ),
-                          splashColor: Colors.redAccent,
-                          highlightColor: Colors.amber,
                           onTap: (){
                             var user = HealthGuardUser(EmailController.text.toString(),
                                 FnameController.text.toString(),
@@ -290,7 +289,12 @@ class _SignUpState extends State<SignUp> {
                                     has_errors = true;
                                   }
                                   else{
+                                    CurrentUserInfo.of(context).currentUser.email = value['email'];
+                                    CurrentUserInfo.of(context).currentUser.fname = value['fname'];
+                                    CurrentUserInfo.of(context).currentUser.access_token = value['access_token'];
+                                    CurrentUserInfo.of(context).currentUser.refresh_token = value['refresh_token'];
                                      setUser(value['email'], value['fname'],value['access_token'], value['refresh_token']);
+
                                      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context)=> HomePage()),(Route<dynamic> route)=> false);
                                   }
                                 });

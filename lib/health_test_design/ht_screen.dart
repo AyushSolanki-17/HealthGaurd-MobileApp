@@ -11,6 +11,11 @@ class HealthTestScreen extends StatefulWidget {
 }
 
 class _HealthTestScreenState extends State<HealthTestScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

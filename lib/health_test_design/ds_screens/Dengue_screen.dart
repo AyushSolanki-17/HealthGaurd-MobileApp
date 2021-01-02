@@ -178,27 +178,28 @@ class _Dengue_screenState extends State<Dengue_screen> {
                 ),
                 has_errors?Text('Has Error'):SizedBox(height:5.0),
                 SizedBox(height:15.0),
-                FlatButton(
+                Material(
                   color: Global.redAccent,
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 50.0),
-                    child: Text(
-                      'Check Results',
-                      style: TextStyle(color: Global.white, fontSize: 20.0),
+                  child: InkWell(
+                    child: Container(
+                      padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 50.0),
+                      child: Text(
+                        'Check Results',
+                        style: TextStyle(color: Global.white, fontSize: 20.0),
+                      ),
                     ),
-                    color: Global.redAccent,
-                  ),
-                  onPressed: () {
-                    if(dengue.is_valid()){
+                    onTap: () {
+                      if(dengue.is_valid()){
 
-                    }
-                    else{
-                      setState(() {
-                        has_errors = true;
-                      });
-                    }
-                  },
+                      }
+                      else{
+                        setState(() {
+                          has_errors = true;
+                        });
+                      }
+                    },
+                  ),
                 ),
               ],
             ),

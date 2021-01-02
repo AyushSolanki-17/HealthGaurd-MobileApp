@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:health_guard/globals.dart';
 import 'package:health_guard/health_test_design/questionbox.dart';
 import 'package:health_guard/Models/ht_data/Diseases.dart';
+import 'package:health_guard/health_test_design/report_screen.dart';
+import 'package:health_guard/main.dart';
 
 class Chikungunya_screen extends StatefulWidget {
   @override
@@ -12,9 +14,20 @@ class Chikungunya_screen extends StatefulWidget {
 class _Chikungunya_screenState extends State<Chikungunya_screen> {
   Chikungunya chikungunya = Chikungunya();
   bool has_errors = false;
+  void refreshToken(){
+    var currentUser = CurrentUserInfo.of(context).currentUser;
+    currentUser.refresh();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var currentUser = CurrentUserInfo.of(context).currentUser;
+    currentUser.refresh();
     return Scaffold(
       body: Column(
         children: [
@@ -154,27 +167,28 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                     ),
                     has_errors?Text('Please answer all the questions'):SizedBox(height:5.0),
                     SizedBox(height:15.0),
-                    FlatButton(
+                    Material(
                       color: Global.redAccent,
-                      child: Container(
-                        padding:
-                        EdgeInsets.symmetric(vertical: 10.0, horizontal: 50.0),
-                        child: Text(
-                          'Check Results',
-                          style: TextStyle(color: Global.white, fontSize: 20.0),
+                      child: InkWell(
+                        child: Container(
+                          padding:
+                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 50.0),
+                          child: Text(
+                            'Check Results',
+                            style: TextStyle(color: Global.white, fontSize: 20.0),
+                          ),
                         ),
-                        color: Global.redAccent,
+                        onTap: () {
+                          if(chikungunya.is_valid()){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>(ReportScreen())));
+                          }
+                          else{
+                            setState(() {
+                              has_errors = true;
+                            });
+                          }
+                        },
                       ),
-                      onPressed: () {
-                        if(chikungunya.is_valid()){
-
-                        }
-                        else{
-                          setState(() {
-                            has_errors = true;
-                          });
-                        }
-                      },
                     ),
                   ],
                 ),

@@ -44,4 +44,18 @@ class Chikungunya{
       return false;
     }
   }
+  Map<String, dynamic> check(){
+    Map<String, dynamic> model = {
+      'fever': this.fever,
+      'headache': this.headache,
+      'rashes': this.rashes,
+      'musclepain': this.musclepain,
+      'jointpain': this.jointpain,
+      'swelling': this.swelling,
+      'fatigue': this.fatigue,
+      'chronic': this.chronic,
+      'days': this.chronic,
+    };
+
+  }
 }

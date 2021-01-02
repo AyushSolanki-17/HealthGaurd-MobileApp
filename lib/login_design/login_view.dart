@@ -12,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:health_guard/home_design/home_page.dart';
 import 'package:health_guard/Models/User.dart';
+import 'package:health_guard/main.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -158,6 +159,10 @@ class _LoginViewState extends State<LoginView> {
                             if (value['Error'] != null) {
                               has_errors = true;
                             } else {
+                              CurrentUserInfo.of(context).currentUser.email = value['email'];
+                              CurrentUserInfo.of(context).currentUser.fname = value['fname'];
+                              CurrentUserInfo.of(context).currentUser.access_token = value['access_token'];
+                              CurrentUserInfo.of(context).currentUser.refresh_token = value['refresh_token'];
                               setUser(
                                   value['email'],
                                   value['fname'],
