@@ -4,6 +4,8 @@ import 'package:health_guard/globals.dart';
 import 'package:health_guard/health_test_design/questionbox.dart';
 import 'package:health_guard/Models/ht_data/Diseases.dart';
 
+import '../report_screen.dart';
+
 class Dengue_screen extends StatefulWidget {
   @override
   _Dengue_screenState createState() => _Dengue_screenState();
@@ -191,7 +193,10 @@ class _Dengue_screenState extends State<Dengue_screen> {
                     ),
                     onTap: () {
                       if(dengue.is_valid()){
-
+                        var result = dengue.check();
+                        result.then((value){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>(ReportScreen(result: value,))));
+                        });
                       }
                       else{
                         setState(() {

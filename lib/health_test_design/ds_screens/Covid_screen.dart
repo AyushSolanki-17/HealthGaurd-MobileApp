@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:health_guard/Models/ht_data/Diseases.dart';
 import 'package:health_guard/globals.dart';
 import 'package:health_guard/health_test_design/questionbox.dart';
-import 'package:health_guard/Models/ht_data/Diseases.dart';
-import 'package:health_guard/health_test_design/report_screen.dart';
-import 'package:health_guard/main.dart';
 
-class Chikungunya_screen extends StatefulWidget {
+import '../../main.dart';
+import '../report_screen.dart';
+
+class Covid_screen extends StatefulWidget {
   @override
-  _Chikungunya_screenState createState() => _Chikungunya_screenState();
+  _Covid_screenState createState() => _Covid_screenState();
 }
 
-class _Chikungunya_screenState extends State<Chikungunya_screen> {
-  Chikungunya chikungunya = Chikungunya();
+class _Covid_screenState extends State<Covid_screen> {
+  Covid covid = new Covid();
   bool has_errors = false;
   void refreshToken(){
     var currentUser = CurrentUserInfo.of(context).currentUser;
@@ -27,7 +28,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
   @override
   Widget build(BuildContext context) {
     var currentUser = CurrentUserInfo.of(context).currentUser;
-    this.chikungunya.cu = currentUser;
+    this.covid.cu = currentUser;
     return Scaffold(
       body: Column(
         children: [
@@ -38,7 +39,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                'Chikungunya Self-Assesment Test',
+                'Covid Self-Assesment Test',
                 style: TextStyle(fontSize: 25.0, color: Global.white),
               ),
             ),
@@ -59,94 +60,82 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.fever = val;
+                          this.covid.fever = val;
                         });
                       },
                     ),
                     QuestionBox(
-                      question: 'Are you experiencing headache?',
+                      question: 'Are you experiencing body pain?',
                       answers: {
                         'No': 0,
                         'Yes': 1,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.headache = val;
+                          this.covid.pain = val;
                         });
                       },
                     ),
                     QuestionBox(
-                      question: 'Have you seen rashes on your skin?',
+                      question: 'Are you experiencing problems in breathing?',
+                      answers: {
+                        'No': 0,
+                        'Yes, after movement or exercise': 1,
+                        'Yes, without any movement': 2,
+                      },
+                      callback: (int val) {
+                        setState(() {
+                          this.covid.respiratory = val;
+                        });
+                      },
+                    ),
+                    QuestionBox(
+                      question: 'Are you experiencing cough?',
+                      answers: {
+                        'No': 0,
+                        'Low/sometimes/after eating oily foods': 1,
+                        'High constant/pain in chest':2,
+                      },
+                      callback: (int val) {
+                        setState(() {
+                          this.covid.cough = val;
+                        });
+                      },
+                    ),
+                    QuestionBox(
+                      question: 'Are you increase in your heartbeat?',
                       answers: {
                         'No': 0,
                         'Yes': 1,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.rashes = val;
+                          this.covid.heartrate = val;
                         });
                       },
                     ),
                     QuestionBox(
-                      question: 'Are you experiencing pain in your joints?',
-                      answers: {
-                        'No': 0,
-                        'Mild or Sometimes': 1,
-                        'Several and constant':2,
-                      },
-                      callback: (int val) {
-                        setState(() {
-                          this.chikungunya.jointpain = val;
-                        });
-                      },
-                    ),
-                    QuestionBox(
-                      question: 'Are you experiencing pain in your muscles?',
+                      question: 'Are you experiencing loss of smell or taste?',
                       answers: {
                         'No': 0,
                         'Yes': 1,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.musclepain = val;
-                        });
-                      },
-                    ),
-
-                    QuestionBox(
-                      question: 'Are you experiencing swelling in your body part?',
-                      answers: {
-                        'No': 0,
-                        'Yes': 1,
-                      },
-                      callback: (int val) {
-                        setState(() {
-                          this.chikungunya.swelling = val;
-                        });
-                      },
-                    ),
-                    QuestionBox(
-                      question: 'Are you experiencing weakness?',
-                      answers: {
-                        'No': 0,
-                        'Yes': 1,
-                      },
-                      callback: (int val) {
-                        setState(() {
-                          this.chikungunya.fatigue = val;
+                          this.covid.lossofsmell = val;
                         });
                       },
                     ),
                     QuestionBox(
                       question:
-                      'Are you suffering from long term disease like diabetes/BP/Cancer ?',
+                      'Are you suffering from long term disease like diabetes/BP/Cancer?',
                       answers: {
                         'No': 0,
                         'Yes': 1,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.chronic = val;
+                          this.covid.chronic = val;
                         });
                       },
                     ),
@@ -161,7 +150,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.days = val;
+                          this.covid.days = val;
                         });
                       },
                     ),
@@ -179,8 +168,8 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                           ),
                         ),
                         onTap: () {
-                          if(chikungunya.is_valid()){
-                            var result = chikungunya.check();
+                          if(covid.is_valid()){
+                            var result = covid.check();
                             result.then((value){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>(ReportScreen(result: value,))));
                             });

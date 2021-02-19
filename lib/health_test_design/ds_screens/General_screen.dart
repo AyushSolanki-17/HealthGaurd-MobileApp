@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:health_guard/globals.dart';
-import 'package:health_guard/health_test_design/questionbox.dart';
 import 'package:health_guard/Models/ht_data/Diseases.dart';
 import 'package:health_guard/health_test_design/report_screen.dart';
-import 'package:health_guard/main.dart';
 
-class Chikungunya_screen extends StatefulWidget {
+import '../../globals.dart';
+import '../../main.dart';
+import '../questionbox.dart';
+
+class General_screen extends StatefulWidget {
   @override
-  _Chikungunya_screenState createState() => _Chikungunya_screenState();
+  _General_screenState createState() => _General_screenState();
 }
 
-class _Chikungunya_screenState extends State<Chikungunya_screen> {
-  Chikungunya chikungunya = Chikungunya();
+class _General_screenState extends State<General_screen> {
+  General general = General();
   bool has_errors = false;
   void refreshToken(){
     var currentUser = CurrentUserInfo.of(context).currentUser;
@@ -27,7 +28,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
   @override
   Widget build(BuildContext context) {
     var currentUser = CurrentUserInfo.of(context).currentUser;
-    this.chikungunya.cu = currentUser;
+    this.general.cu = currentUser;
     return Scaffold(
       body: Column(
         children: [
@@ -38,7 +39,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                'Chikungunya Self-Assesment Test',
+                'General Self-Assesment Test',
                 style: TextStyle(fontSize: 25.0, color: Global.white),
               ),
             ),
@@ -59,56 +60,58 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.fever = val;
+                          this.general.fever = val;
                         });
                       },
                     ),
                     QuestionBox(
-                      question: 'Are you experiencing headache?',
+                      question: 'Are you experiencing rashes on your skin?',
+                      answers: {
+                        'No': 0,
+                        'Yes, but on single area or body part': 1,
+                        'Yes, more than one body part': 2,
+                      },
+                      callback: (int val) {
+                        setState(() {
+                          this.general.rashes = val;
+                        });
+                      },
+                    ),
+                    QuestionBox(
+                      question: 'Are you experiencing any kind of pain in your joints?',
+                      answers: {
+                        'No': 0,
+                        'Yes, but after movement or recent travelling, exercise etc.': 1,
+                        'Yes, Mild without any movement': 2,
+                        'Yes, constant without any movement': 3,
+                      },
+                      callback: (int val) {
+                        setState(() {
+                          this.general.jointpain = val;
+                        });
+                      },
+                    ),
+                    QuestionBox(
+                      question: 'Are you experiencing bleeding from any body part like mouth or nose?',
                       answers: {
                         'No': 0,
                         'Yes': 1,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.headache = val;
+                          this.general.bleeding = val;
                         });
                       },
                     ),
                     QuestionBox(
-                      question: 'Have you seen rashes on your skin?',
+                      question: 'Are you experiencing weakness?',
                       answers: {
                         'No': 0,
                         'Yes': 1,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.rashes = val;
-                        });
-                      },
-                    ),
-                    QuestionBox(
-                      question: 'Are you experiencing pain in your joints?',
-                      answers: {
-                        'No': 0,
-                        'Mild or Sometimes': 1,
-                        'Several and constant':2,
-                      },
-                      callback: (int val) {
-                        setState(() {
-                          this.chikungunya.jointpain = val;
-                        });
-                      },
-                    ),
-                    QuestionBox(
-                      question: 'Are you experiencing pain in your muscles?',
-                      answers: {
-                        'No': 0,
-                        'Yes': 1,
-                      },
-                      callback: (int val) {
-                        setState(() {
-                          this.chikungunya.musclepain = val;
+                          this.general.fatigue = val;
                         });
                       },
                     ),
@@ -121,32 +124,92 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.swelling = val;
+                          this.general.swelling = val;
                         });
                       },
                     ),
                     QuestionBox(
-                      question: 'Are you experiencing weakness?',
+                      question: 'Are you experiencing vomiting?',
                       answers: {
                         'No': 0,
-                        'Yes': 1,
+                        'Nausea only': 1,
+                        'Vomiting 1 or 2 times': 1,
+                        'Vomiting 3+ times': 1,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.fatigue = val;
+                          this.general.vomiting = val;
                         });
                       },
                     ),
                     QuestionBox(
                       question:
-                      'Are you suffering from long term disease like diabetes/BP/Cancer ?',
+                      'Are you experiencing coughing?',
                       answers: {
                         'No': 0,
-                        'Yes': 1,
+                        'Low/sometimes/after eating oily foods': 1,
+                        'High constant/pain in chest': 2,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.chronic = val;
+                          this.general.cough = val;
+                        });
+                      },
+                    ),
+                    QuestionBox(
+                      question:
+                      'Are you experiencing shivering?',
+                      answers: {
+                        'No': 0,
+                        'Low with normal conditions': 1,
+                        'Constant even in warm place': 2,
+                      },
+                      callback: (int val) {
+                        setState(() {
+                          this.general.shivering = val;
+                        });
+                      },
+                    ),
+                    QuestionBox(
+                      question:
+                      'Are you experiencing problems in breathing?',
+                      answers: {
+                        'No': 0,
+                        'Yes, after movement/exercise': 1,
+                        'Yes, even while doing normal works': 2,
+                        'Constant problems even while resting': 3,
+                      },
+                      callback: (int val) {
+                        setState(() {
+                          this.general.respiratory = val;
+                        });
+                      },
+                    ),
+                    QuestionBox(
+                      question:
+                      'Are you experiencing loss of smell?',
+                      answers: {
+                        'No': 0,
+                        'Yes, loss of smell only': 1,
+                        'Yes, loss of smell + loss of taste': 2,
+                      },
+                      callback: (int val) {
+                        setState(() {
+                          this.general.lossofsmell = val;
+                        });
+                      },
+                    ),
+                    QuestionBox(
+                      question:
+                      'Are you experiencing sorethroat?',
+                      answers: {
+                        'No': 0,
+                        'Yes, after eating food': 1,
+                        'Yes, constant': 2,
+                      },
+                      callback: (int val) {
+                        setState(() {
+                          this.general.sorethroat = val;
                         });
                       },
                     ),
@@ -161,7 +224,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.days = val;
+                          this.general.days = val;
                         });
                       },
                     ),
@@ -179,8 +242,8 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                           ),
                         ),
                         onTap: () {
-                          if(chikungunya.is_valid()){
-                            var result = chikungunya.check();
+                          if(general.is_valid()){
+                            var result = general.check();
                             result.then((value){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>(ReportScreen(result: value,))));
                             });

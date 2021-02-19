@@ -40,7 +40,7 @@ class HealthGuardUser{
     }
     catch(e){
       return {
-        'Error':'Server Error'
+        'Error':'Network Request Error'
       };
     }
   }
@@ -64,7 +64,7 @@ class HealthGuardUser{
     }
     catch(e){
       return {
-        'Error':'Server Error'
+        'Error':'Network Request Error'
       };
     }
   }

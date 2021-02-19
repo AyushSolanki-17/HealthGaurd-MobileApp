@@ -1,8 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:health_guard/globals.dart';
 
+// ignore: must_be_immutable
 class ReportScreen extends StatelessWidget{
+
+  final Map<String, dynamic> result;
+
+  const ReportScreen({Key key, this.result}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +37,16 @@ class ReportScreen extends StatelessWidget{
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    ReportField(heading: "Patient Name",content: "Xyz Abc",),
-                    ReportField(heading: "Patient Name",content: "Xyz Abc",),
-                    ReportField(heading: "Patient Name",content: "Xyz Abc",),
-                    ReportField(heading: "Patient Name",content: "Xyz Abc",),
+                    SizedBox(height: 10.0,),
+                    ReportField(heading: "Patient Name",content: result['fname'],),
+                    SizedBox(height: 10.0,),
+                    ReportField(heading: "Patient Email",content: result['email'],),
+                    SizedBox(height: 10.0,),
+                    ReportField(heading: "Test Type",content: result["type"],),
+                    SizedBox(height: 10.0,),
+                    ReportField(heading: "Result",content: result['result'],),
+                    SizedBox(height: 10.0,),
+                    DescField(heading: "Description",content: result["description"],),
                   ],
                 ),
               ),
@@ -55,12 +68,30 @@ class ReportField extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Container(padding: EdgeInsets.symmetric(horizontal: 4.5),child: Text("${this.heading}")),
-        Container(padding: EdgeInsets.symmetric(horizontal: 4.5),child: Text("${this.content}",)),
+        Container(child: Text("${this.heading}: ",style: TextStyle(fontSize: 20.0),),
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          margin: EdgeInsets.symmetric(vertical: 15.0),
+        ),
+        Expanded(child: Text("${this.content}",style: TextStyle(fontSize: 20.0,color: Global.redAccent,),)),
       ],
     );
   }
+}
+class DescField extends StatelessWidget{
+  final String heading;
+  final String content;
 
+  const DescField({Key key, this.heading, this.content}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(child: Text("${this.heading}: ", style: TextStyle(fontSize: 20.0, ),),padding: EdgeInsets.symmetric(horizontal: 15.0),margin: EdgeInsets.symmetric(vertical: 15.0),),
+        Container(child: Text("${this.content}",textAlign: TextAlign.justify,style: TextStyle(color: Global.darkblue1, fontSize: 15.0),),padding: EdgeInsets.symmetric(horizontal: 15.0),),
+      ],
+    );
+  }
 }

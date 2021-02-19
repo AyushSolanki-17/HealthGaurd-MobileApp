@@ -1,18 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:health_guard/Models/ht_data/Diseases.dart';
 import 'package:health_guard/globals.dart';
 import 'package:health_guard/health_test_design/questionbox.dart';
-import 'package:health_guard/Models/ht_data/Diseases.dart';
-import 'package:health_guard/health_test_design/report_screen.dart';
 import 'package:health_guard/main.dart';
 
-class Chikungunya_screen extends StatefulWidget {
+import '../report_screen.dart';
+
+class Malaria_screen extends StatefulWidget {
   @override
-  _Chikungunya_screenState createState() => _Chikungunya_screenState();
+  _Malaria_screenState createState() => _Malaria_screenState();
 }
 
-class _Chikungunya_screenState extends State<Chikungunya_screen> {
-  Chikungunya chikungunya = Chikungunya();
+class _Malaria_screenState extends State<Malaria_screen> {
+  Malaria malaria = new Malaria();
   bool has_errors = false;
   void refreshToken(){
     var currentUser = CurrentUserInfo.of(context).currentUser;
@@ -27,7 +28,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
   @override
   Widget build(BuildContext context) {
     var currentUser = CurrentUserInfo.of(context).currentUser;
-    this.chikungunya.cu = currentUser;
+    this.malaria.cu = currentUser;
     return Scaffold(
       body: Column(
         children: [
@@ -38,7 +39,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
             child: Align(
               alignment: Alignment.center,
               child: Text(
-                'Chikungunya Self-Assesment Test',
+                'Malaria Self-Assesment Test',
                 style: TextStyle(fontSize: 25.0, color: Global.white),
               ),
             ),
@@ -59,7 +60,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.fever = val;
+                          this.malaria.fever = val;
                         });
                       },
                     ),
@@ -71,57 +72,72 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.headache = val;
+                          this.malaria.headache = val;
                         });
                       },
                     ),
                     QuestionBox(
-                      question: 'Have you seen rashes on your skin?',
+                      question: 'Are you experiencing shivering?',
                       answers: {
                         'No': 0,
                         'Yes': 1,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.rashes = val;
+                          this.malaria.shivering = val;
                         });
                       },
                     ),
                     QuestionBox(
-                      question: 'Are you experiencing pain in your joints?',
+                      question: 'Are you experiencing vomiting?',
                       answers: {
                         'No': 0,
-                        'Mild or Sometimes': 1,
-                        'Several and constant':2,
+                        'Only Nausea': 1,
+                        'Vomiting 1 or 2 times':2,
+                        'Vomiting 3+ times':3,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.jointpain = val;
+                          this.malaria.vomitting = val;
                         });
                       },
                     ),
                     QuestionBox(
-                      question: 'Are you experiencing pain in your muscles?',
+                      question: 'Are you experiencing cough?',
                       answers: {
                         'No': 0,
-                        'Yes': 1,
+                        'Low/sometimes/after eating oily foods': 1,
+                        'High constant/pain in chest': 2,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.musclepain = val;
+                          this.malaria.cough = val;
                         });
                       },
                     ),
 
                     QuestionBox(
-                      question: 'Are you experiencing swelling in your body part?',
+                      question: 'Are you experiencing problems in breathing?',
+                      answers: {
+                        'No': 0,
+                        'Yes, but only after movement/exercise': 1,
+                        'Yes, high without movement': 1,
+                      },
+                      callback: (int val) {
+                        setState(() {
+                          this.malaria.respiratory = val;
+                        });
+                      },
+                    ),
+                    QuestionBox(
+                      question: 'Are you experiencing increase in your heartbeat?',
                       answers: {
                         'No': 0,
                         'Yes': 1,
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.swelling = val;
+                          this.malaria.fastheartrate = val;
                         });
                       },
                     ),
@@ -133,7 +149,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.fatigue = val;
+                          this.malaria.fatigue = val;
                         });
                       },
                     ),
@@ -146,7 +162,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.chronic = val;
+                          this.malaria.chronic = val;
                         });
                       },
                     ),
@@ -161,7 +177,7 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                       },
                       callback: (int val) {
                         setState(() {
-                          this.chikungunya.days = val;
+                          this.malaria.days = val;
                         });
                       },
                     ),
@@ -179,8 +195,8 @@ class _Chikungunya_screenState extends State<Chikungunya_screen> {
                           ),
                         ),
                         onTap: () {
-                          if(chikungunya.is_valid()){
-                            var result = chikungunya.check();
+                          if(malaria.is_valid()){
+                            var result = malaria.check();
                             result.then((value){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=>(ReportScreen(result: value,))));
                             });

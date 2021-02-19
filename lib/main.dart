@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:health_guard/login_design/login_view.dart';
+import 'package:health_guard/medicine_reminder/NotifScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:health_guard/home_design/home_page.dart';
 import 'package:health_guard/health_test_design/ht_screen.dart';
@@ -40,7 +41,7 @@ class HealthGuard extends StatelessWidget
       currentUser: currentUser,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: MainPage(),//MainPage()
+        home: NotifScreen()//MainPage(),
       ),
     );
   }
