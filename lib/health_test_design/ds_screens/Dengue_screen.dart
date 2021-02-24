@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:health_guard/globals.dart';
 import 'package:health_guard/health_test_design/questionbox.dart';
 import 'package:health_guard/Models/ht_data/Diseases.dart';
+import 'package:health_guard/main.dart';
 
 import '../report_screen.dart';
 
@@ -14,9 +15,15 @@ class Dengue_screen extends StatefulWidget {
 class _Dengue_screenState extends State<Dengue_screen> {
   Dengue dengue = Dengue();
   bool has_errors = false;
+  void refreshToken(){
+    var currentUser = CurrentUserInfo.of(context).currentUser;
+    currentUser.refresh();
+  }
 
   @override
   Widget build(BuildContext context) {
+    var currentUser = CurrentUserInfo.of(context).currentUser;
+    this.dengue.cu = currentUser;
     return Scaffold(
       body: Column(
         children: [
@@ -191,12 +198,10 @@ class _Dengue_screenState extends State<Dengue_screen> {
                         style: TextStyle(color: Global.white, fontSize: 20.0),
                       ),
                     ),
-                    onTap: () {
+                    onTap: () async{
                       if(dengue.is_valid()){
-                        var result = dengue.check();
-                        result.then((value){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>(ReportScreen(result: value,))));
-                        });
+                        var result = await dengue.check();
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>(ReportScreen(result: result,))));
                       }
                       else{
                         setState(() {

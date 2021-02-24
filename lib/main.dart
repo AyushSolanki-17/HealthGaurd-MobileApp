@@ -3,12 +3,11 @@ import 'package:health_guard/login_design/login_view.dart';
 import 'package:health_guard/medicine_reminder/NotifScreen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:health_guard/home_design/home_page.dart';
-import 'package:health_guard/health_test_design/ht_screen.dart';
 import 'package:health_guard/api_credentials.dart' as api_credentials;
-import 'package:health_guard/home_design/Dashboard.dart';
 import 'package:http/http.dart' as http;
+import 'package:health_guard/medicine_reminder/ReminderScreen.dart';
 import 'dart:convert';
-
+import 'package:health_guard/medicine_reminder/AddReminderScreen.dart';
 import 'Models/CurrentUser.dart';
 
 void main()=>runApp(HealthGuard());
@@ -41,7 +40,7 @@ class HealthGuard extends StatelessWidget
       currentUser: currentUser,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: NotifScreen()//MainPage(),
+        home: MainPage(),
       ),
     );
   }

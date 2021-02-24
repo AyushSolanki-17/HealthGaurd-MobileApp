@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:health_guard/medicine_reminder/TimeZone.dart';
 import 'dart:io' show File, Platform;
-import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:rxdart/rxdart.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +10,25 @@ import 'package:flutter/services.dart';
 
 class NotificationPlugin {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  final MethodChannel platform = MethodChannel('dexterx.dev/flutter_local_notifications_example');
+  final timeZone = TimeZone();
+  var androidChannelSpecifics = AndroidNotificationDetails(
+    "CHANNEL_ID_05",
+    "CHANNEL_NAME_REG_NOTIF",
+    "CHANNEL_DESC_TO_PROVIDE_NOTIFS",
+    importance: Importance.max,
+    priority: Priority.high,
+  );
+  var iosChannelSpecifics = IOSNotificationDetails();
+
+  NotificationDetails getPlatformChannelSpecifics(){
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidChannelSpecifics,
+        iOS: iosChannelSpecifics);
+    return platformChannelSpecifics;
+  }
+
+
+
   final BehaviorSubject<ReceivedNotification>
       didReceivedLocalNotificationSubject =
       BehaviorSubject<ReceivedNotification>();
@@ -27,6 +45,7 @@ class NotificationPlugin {
       _requestIOSPermission();
     }
     initializePlatformSpecifics();
+
   }
 
   initializePlatformSpecifics() {
@@ -81,36 +100,38 @@ class NotificationPlugin {
     await flutterLocalNotificationsPlugin.show(0, "Hello", "This is body",
         platformChannelSpecifics, payload: "Test Payload");
   }
-  Future<void> _configureLocalTimeZone() async {
-    tz.initializeTimeZones();
-    final String timeZoneName = await platform.invokeMethod('getTimeZoneName');
-    tz.setLocalLocation(tz.getLocation(timeZoneName));
-  }
-  Future<void> scheduleDailyTenAMNotification() async {
-    await _configureLocalTimeZone();
+
+
+
+  Future<void> scheduleDailyNotification(int id,String notificationDesc,int hours, int minutes) async {
+
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        'notification title',
-        'scheduled notification body',
-        _nextInstanceOfTenAM(),
-        const NotificationDetails(
-          android: AndroidNotificationDetails(
-              'daily notification channel id',
-              'daily notification channel name',
-              'daily notification description'),
-        ),
+        id,
+        'MedicineReminder',
+        notificationDesc,
+        await _nextInstanceOfTime(hours,minutes),
+        getPlatformChannelSpecifics(),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time);
   }
-  tz.TZDateTime _nextInstanceOfTenAM() {
-    final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate =
-    tz.TZDateTime(tz.local, now.year, now.month, now.day, 16,33);
-    if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
+
+  Future<tz.TZDateTime> _nextInstanceOfTime(int hours, int minutes) async{
+    String timeZoneName = await timeZone.getTimeZoneName();
+    final location = await timeZone.getLocation(timeZoneName);
+    DateTime currentDateTime = new DateTime.now();
+    DateTime scheduledDateTime = new DateTime(
+        currentDateTime.year,
+      currentDateTime.month,
+      currentDateTime.day,
+      hours,
+      minutes
+    );
+    if(scheduledDateTime.isBefore(currentDateTime)){
+      scheduledDateTime = scheduledDateTime.add(const Duration(days: 1));
     }
+    final scheduledDate = tz.TZDateTime.from(scheduledDateTime, location);
     return scheduledDate;
   }
 }

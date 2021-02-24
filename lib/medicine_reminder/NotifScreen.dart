@@ -12,6 +12,7 @@ class _NotifScreenState extends State<NotifScreen> {
   @override
   void initState() {
     // TODO: implement initState
+    super.initState();
     notificationPlugin.setListnerForLowerVersions(onNotificationInLowerVerions);
     notificationPlugin.setOnNotificationClick(onNotificationClick);
   }
@@ -24,7 +25,7 @@ class _NotifScreenState extends State<NotifScreen> {
           child: RaisedButton(
             child: Text('Send Notif'),
             onPressed: ()async{
-              await notificationPlugin.scheduleDailyTenAMNotification();
+              await notificationPlugin.scheduleDailyNotification(0,"Sos", 18, 0);
             },
           ),
         ),

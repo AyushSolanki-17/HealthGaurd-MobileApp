@@ -39,6 +39,7 @@ class HealthGuardUser{
       return await json.decode(response.body);
     }
     catch(e){
+      print(e);
       return {
         'Error':'Network Request Error'
       };
@@ -63,6 +64,7 @@ class HealthGuardUser{
       return val;
     }
     catch(e){
+      print(e);
       return {
         'Error':'Network Request Error'
       };

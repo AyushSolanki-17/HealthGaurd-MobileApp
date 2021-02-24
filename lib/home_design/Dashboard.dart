@@ -9,6 +9,7 @@ import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:health_guard/fonts_icons/med_icons.dart';
 import 'package:health_guard/health_test_design/ht_screen.dart';
 import 'package:health_guard/home_design/home_page.dart';
+import 'package:health_guard/medicine_reminder/ReminderScreen.dart';
 import '../main.dart';
 import 'CardDesign.dart';
 
@@ -236,7 +237,12 @@ class _DashboardState extends State<Dashboard>
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: <Widget>[
                               InkWell(
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.push (
+                                    context,
+                                    MaterialPageRoute(builder: (context) => (ReminderScreen())),
+                                  );
+                                },
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[

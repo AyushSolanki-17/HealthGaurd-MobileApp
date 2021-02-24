@@ -194,12 +194,10 @@ class _Malaria_screenState extends State<Malaria_screen> {
                             style: TextStyle(color: Global.white, fontSize: 20.0),
                           ),
                         ),
-                        onTap: () {
+                        onTap: () async{
                           if(malaria.is_valid()){
-                            var result = malaria.check();
-                            result.then((value){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>(ReportScreen(result: value,))));
-                            });
+                            var result = await malaria.check();
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>(ReportScreen(result: result,))));
                           }
                           else{
                             setState(() {

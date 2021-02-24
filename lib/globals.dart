@@ -13,5 +13,7 @@ class Global {
   static const Color seaGreen = const Color.fromARGB(255,102, 187, 106);
   static const Color gray = const Color(0xffDFE0E2);
   static const Color blue = const Color(0xff112D55);
+  static const Color yellow = const Color(0xffffeb3b);
+  static const Color lightblue = const Color(0xff29b6f6);
   static const Color darkblue1 = const Color.fromARGB(255,0, 26, 102);
 }

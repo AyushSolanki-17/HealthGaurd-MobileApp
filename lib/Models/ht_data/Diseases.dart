@@ -29,6 +29,7 @@ Future<Map<String, dynamic>> diseaseRequest(cu,model,dname) async{
     return val;
   }
   catch(e){
+    print(e);
     return {
       'Error': 'Network Requst Error'
     };
