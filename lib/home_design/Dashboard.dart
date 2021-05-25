@@ -214,77 +214,8 @@ class _DashboardState extends State<Dashboard>
                     padding: EdgeInsets.all(20.0),
                     child: Column(
                       children: <Widget>[
-                        Container(
-                          alignment: Alignment.center,
-                          height: 75,
-                          decoration: BoxDecoration(
-                              color: Global.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                              boxShadow: [
-                                BoxShadow(
-                                    color: Global.gray,
-                                    offset: Offset(4.0, 4.0),
-                                    blurRadius: 15.0,
-                                    spreadRadius: 0.5),
-                                BoxShadow(
-                                    color: Global.lightBlue,
-                                    offset: Offset(-4.0, -4.0),
-                                    blurRadius: 15.0,
-                                    spreadRadius: 0.5),
-                              ]),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push (
-                                    context,
-                                    MaterialPageRoute(builder: (context) => (ReminderScreen())),
-                                  );
-                                },
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.timer,
-                                      size: 30.0,
-                                      color: Global.blue,
-                                    ),
-                                    SizedBox(height: 3.0),
-                                    Text(
-                                      "Reminder",
-                                      style: TextStyle(
-                                        color: Global.black,
-                                        fontSize: 15.0,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.add_moderator,
-                                    size: 30.0,
-                                    color: Global.blue,
-                                  ),
-                                  SizedBox(height: 3.0),
-                                  Text(
-                                    "Emergency",
-                                    style: TextStyle(
-                                      color: Global.black,
-                                      fontSize: 15.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 30.0),
-                        Row(
+                        SizedBox(height: 50.0),
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             InkWell(
@@ -299,36 +230,22 @@ class _DashboardState extends State<Dashboard>
                                 buttonText: "Self Test",
                               ),
                             ),
+                            SizedBox(height: 50.0),
                             InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push (
+                                  context,
+                                  MaterialPageRoute(builder: (context) => (ReminderScreen())),
+                                );
+                              },
                               child: MyCard(
-                                buttonIcons: Icons.home_work_outlined,
-                                buttonText: "Hospital",
+                                buttonIcons: Icons.timer,
+                                buttonText: "Reminder",
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 30.0),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            InkWell(
-                              onTap: () {},
-                              child: MyCard(
-                                buttonIcons: Icons.local_pharmacy_outlined,
-                                buttonText: "Pharmacy",
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {},
-                              child: MyCard(
-                                buttonIcons: Icons.dashboard,
-                                buttonText: "Blog",
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 30.0),
+
                       ],
                     ),
                   ),

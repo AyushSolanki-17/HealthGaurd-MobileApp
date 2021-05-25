@@ -176,15 +176,6 @@ class _AddReminderState extends State<AddReminder> {
                   ],
                 ),
               ),
-              SizedBox(height: 15),
-              Text(
-                'Additional notes',
-                style: TextStyle(
-                  color: Global.blue,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
               SizedBox(height: 50),
               ClipRRect(
                 borderRadius: BorderRadius.circular(20),

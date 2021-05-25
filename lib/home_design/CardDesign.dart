@@ -20,10 +20,11 @@ class MyCard extends StatelessWidget{
         .size;
     screenHeight = size.height;
     screenWidth = size.width;
+
     return Material(
       child: InkWell(
         child: Container(
-          width: screenWidth/2.6,
+          width: screenWidth/1.5,
           height: screenHeight/5.5,
           decoration: BoxDecoration(
               color: Global.white,

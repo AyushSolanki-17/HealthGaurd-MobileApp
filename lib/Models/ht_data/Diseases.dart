@@ -130,7 +130,6 @@ class General{
   int shivering;
   int jointpain;
   int vomiting;
-  int fatigue;
   int cough;
   int bleeding;
   int swelling;
@@ -142,7 +141,7 @@ class General{
   bool is_valid(){
     if (this.fever != null && this.vomiting != null && this.rashes != null && this.cough != null
         && this.bleeding != null && this.lossofsmell != null && this.shivering != null
-        && this.jointpain != null && this.swelling != null && this.fatigue != null && this.respiratory != null && this.days != null){
+        && this.jointpain != null && this.swelling != null && this.respiratory != null && this.days != null){
       return true;
     }
     else{
@@ -159,7 +158,6 @@ class General{
       'bleeding': this.bleeding,
       'jointpain': this.jointpain,
       'swelling': this.swelling,
-      'fatigue': this.fatigue,
       'cough': this.cough,
       'respiratory': this.respiratory,
       'sorethroat': this.sorethroat,

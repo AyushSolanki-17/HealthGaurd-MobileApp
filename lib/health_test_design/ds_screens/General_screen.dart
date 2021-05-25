@@ -103,18 +103,6 @@ class _General_screenState extends State<General_screen> {
                         });
                       },
                     ),
-                    QuestionBox(
-                      question: 'Are you experiencing weakness?',
-                      answers: {
-                        'No': 0,
-                        'Yes': 1,
-                      },
-                      callback: (int val) {
-                        setState(() {
-                          this.general.fatigue = val;
-                        });
-                      },
-                    ),
 
                     QuestionBox(
                       question: 'Are you experiencing swelling in your body part?',
